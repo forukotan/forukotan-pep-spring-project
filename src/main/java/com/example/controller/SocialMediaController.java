@@ -30,7 +30,7 @@ public SocialMediaController(AccountService accountService){
 public ResponseEntity<Account> register(@RequestBody Account account) {
     Account existAccount = accountService.findAccountByUsername(account.getUsername());
     if (existAccount != null)
-        return ResponseEntity.status(409).body(null);
+        return ResponseEntity.status(409).body(null);// bo said to do this, dont understand this stuff yet
 
     Account verifiedAccount = accountService.addUser(account);
     if (verifiedAccount != null) {
@@ -38,6 +38,18 @@ public ResponseEntity<Account> register(@RequestBody Account account) {
     } else {
         return ResponseEntity.status(400).body(null);
     }
-    
+}
+@PostMapping(value = "/login")
+public ResponseEntity<Account> login(@RequestBody Account account){
+    Account loginUser =accountService.login(account);
+
+    if(loginUser!= null)
+    {
+        return ResponseEntity.ok(loginUser);
+    }
+    else
+    {
+        return ResponseEntity.status(401).body(null);
+    }
 }
 }

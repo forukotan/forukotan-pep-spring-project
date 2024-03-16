@@ -36,7 +36,7 @@ public class AccountService {
     public Account login(Account account){
         String username = account.getUsername();
         String password = account.getPassword();
-        Optional<Account> existingAccount = accountRepository.findAccountByUsername(username);
+        Optional<Account> existingAccount = accountRepository.findByUsername(username);
 
         if (existingAccount.isPresent() && existingAccount.get().getPassword().equals(password)) {
             return existingAccount.get();
