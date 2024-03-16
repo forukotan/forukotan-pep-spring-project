@@ -1,12 +1,16 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
@@ -19,10 +23,12 @@ import com.example.service.MessageService;
 @RestController
 public class SocialMediaController {
 public AccountService accountService;
-// private MessageService messageService;
+public MessageService messageService;
 @Autowired
-public SocialMediaController(AccountService accountService){
-    this.accountService =accountService;}
+public SocialMediaController(AccountService accountService, MessageService messageService){
+    this.accountService =accountService;
+    this.messageService = messageService;
+}
     
 
 
@@ -52,4 +58,25 @@ public ResponseEntity<Account> login(@RequestBody Account account){
         return ResponseEntity.status(401).body(null);
     }
 }
+
+@PostMapping(value = "/messages")
+public ResponseEntity<Message> newMessage(@RequestBody Message message){
+Message newMessaged =messageService.newMessage(message);
+
+if(newMessaged!= null)
+{
+    return ResponseEntity.ok(newMessaged);
+}
+else
+{
+    return ResponseEntity.status(400).body(null);
+}
+}
+
+@GetMapping(value = "/messages")
+public ResponseEntity<List<Message>> getAllMessages() {
+    List<Message> messages = messageService.getAllMessages();
+    return ResponseEntity.ok(messages);
+}
+
 }
