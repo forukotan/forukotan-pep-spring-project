@@ -60,7 +60,24 @@ public boolean deleteMessage(int messageid){
     return false;
 }
 
-public 
+public Message updatedMessage(int messageid, String newMessageText){
+    if(newMessageText == null || newMessageText.isBlank()|| newMessageText.length() > 255){
+        return null;
+    }
+    Optional<Message> message = messageRepository.findById(messageid);
+    if(message.isPresent()){
+        Message messages = message.get();
+        messages.setMessage_text(newMessageText);
+        messageRepository.save(messages);
+        return messages;
+    }
+    else{
+        return null;
+    }
+
+}
+
+find
 
 
 

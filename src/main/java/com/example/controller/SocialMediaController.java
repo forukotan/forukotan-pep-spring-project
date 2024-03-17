@@ -1,12 +1,14 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -99,4 +101,17 @@ public ResponseEntity<?> deleteMessage(@PathVariable Integer message_id) {
     }
 }
 
+@PatchMapping("/messages/{message_id}")
+// public ResponseEntity<?> updatedMessage(@PathVariable int message_id,  @RequestBody String newMessageText )  not sure why this doesnt work
+public ResponseEntity<?> updatedMessage(@PathVariable int message_id, @RequestBody Map<String, String> updateMap) {
+    String newMessageText = updateMap.get("message_text");
+    
+    Message updatedMessage = messageService.updatedMessage(message_id, newMessageText);
+
+    if (updatedMessage != null) {
+        return ResponseEntity.ok(1); 
+    } else {
+        return ResponseEntity.badRequest().build(); 
+}
+}
 }
