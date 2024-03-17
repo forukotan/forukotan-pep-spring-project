@@ -114,4 +114,14 @@ public ResponseEntity<?> updatedMessage(@PathVariable int message_id, @RequestBo
         return ResponseEntity.badRequest().build(); 
 }
 }
+
+@GetMapping("accounts/{account_id}/messages")
+public ResponseEntity<List<Message>> messageByUser(
+    @PathVariable int account_id) {
+    return ResponseEntity.ok(
+        messageService.messageByUser(account_id));
 }
+}
+
+
+

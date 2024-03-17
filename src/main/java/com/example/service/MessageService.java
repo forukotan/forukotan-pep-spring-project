@@ -77,9 +77,12 @@ public Message updatedMessage(int messageid, String newMessageText){
 
 }
 
-find
+public List<Message> getMessagesByAccountId(int accountId) {
+    return null;
+}
 
-
-
+public List<Message> messageByUser(int id){
+    return messageRepository.getMessagesByAccountId(id);
+}
 }
 
