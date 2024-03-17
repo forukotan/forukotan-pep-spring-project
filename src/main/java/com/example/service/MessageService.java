@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -46,6 +47,20 @@ public Message newMessage(Message message){
 public List<Message> getAllMessages() {
     return messageRepository.findAll();
 }
+
+public Optional<Message> getMessageById(int messageid){
+    return messageRepository.findById(messageid);
+}
+
+public boolean deleteMessage(int messageid){
+    if(messageRepository.existsById(messageid)){
+        messageRepository.deleteById(messageid);
+        return true;
+    }
+    return false;
+}
+
+public 
 
 
 

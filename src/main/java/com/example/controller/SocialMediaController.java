@@ -1,10 +1,13 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,6 +80,23 @@ else
 public ResponseEntity<List<Message>> getAllMessages() {
     List<Message> messages = messageService.getAllMessages();
     return ResponseEntity.ok(messages);
+}
+
+@GetMapping(value = "/messages/{message_id}")
+public ResponseEntity<Message> getMessageById(@PathVariable Integer message_id) {
+    Optional<Message> message = messageService.getMessageById(message_id);
+    return ResponseEntity.ok(message.orElse(null));
+}
+
+@DeleteMapping(value = "/messages/{message_id}")
+public ResponseEntity<?> deleteMessage(@PathVariable Integer message_id) {
+    boolean wasDeleted = messageService.deleteMessage(message_id);
+
+    if (wasDeleted) {
+        return ResponseEntity.ok().body(1); // intellij put a 1 instead of empty so google that
+    } else {
+        return ResponseEntity.ok().body(null); 
+    }
 }
 
 }
